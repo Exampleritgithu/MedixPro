@@ -19,7 +19,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const menuItems = [
-  
   {
     key: "dashboard",
     label: "Dashboard",
@@ -168,52 +167,56 @@ const Sidebar = ({ open }) => {
     <div
       className={`${
         open ? "w-72" : "w-24"
-      } bg-black h-screen p-4 transition-all duration-300 overflow-y-auto scrollbar-hide`}
+      } bg-black h-screen flex flex-col transition-all duration-300`}
     >
-      {/* Logo */}
-      <h1 className="text-2xl font-bold text-blue-400 mb-6 flex items-center gap-2">
-        <span className="p-2 rounded">
-          <img src="Logo.png" alt="Logo" className="w-12 h-10" />
-        </span>
-        {open && "MedixPro"}
-      </h1>
+      {/* Logo (Sticky at Top) */}
+      <div className="sticky top-0 bg-black z-10 p-4">
+        <h1 className="text-2xl font-bold text-blue-400 flex items-center gap-2">
+          <span className="p-2 rounded">
+            <img src="Logo.png" alt="Logo" className="w-12 h-10" />
+          </span>
+          {open && "MedixPro"}
+        </h1>
+      </div>
 
-      {/* Menu */}
-      <ul className="space-y-8 text-xl">
-        {menuItems.map(({ key, label, icon: Icon, subMenu }) => (
-          <li key={key}>
-            <div
-              className="flex items-center justify-between text-white hover:bg-gray-800 rounded-lg p-2 cursor-pointer"
-              onClick={() => toggleMenu(key)}
-            >
-              <span className="flex items-center gap-2">
-                <Icon /> {open && label}
-              </span>
-              {open && (
-                <ChevronDown
-                  className={`${
-                    openMenu === key ? "rotate-180" : ""
-                  } transition`}
-                />
+      {/* Menu (Scrollable) */}
+      <div className="flex-1 overflow-y-auto scrollbar-hide p-4">
+        <ul className="space-y-8 font-bold text-xl">
+          {menuItems.map(({ key, label, icon: Icon, subMenu }) => (
+            <li key={key}>
+              <div
+                className="flex items-center justify-between text-white hover:bg-gray-800 rounded-lg p-2 cursor-pointer"
+                onClick={() => toggleMenu(key)}
+              >
+                <span className="flex items-center gap-2">
+                  <Icon /> {open && label}
+                </span>
+                {open && (
+                  <ChevronDown
+                    className={`${
+                      openMenu === key ? "rotate-180" : ""
+                    } transition`}
+                  />
+                )}
+              </div>
+              {openMenu === key && open && (
+                <ul className="ml-8 space-y-2 text-gray-300 text-base">
+                  {subMenu.map(({ label: subLabel, to }) => (
+                    <li key={to}>
+                      <Link
+                        to={to}
+                        className="hover:bg-gray-800 rounded-lg p-2 block"
+                      >
+                        {subLabel}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               )}
-            </div>
-            {openMenu === key && open && (
-              <ul className="ml-8 space-y-2 text-gray-300 text-base">
-                {subMenu.map(({ label: subLabel, to }) => (
-                  <li key={to}>
-                    <Link
-                      to={to}
-                      className="hover:bg-gray-800 rounded-lg p-2 block"
-                    >
-                      {subLabel}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

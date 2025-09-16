@@ -2,7 +2,10 @@ import { useState } from "react";
 import { DollarSign, Calendar, Users, UserPlus, Download } from "lucide-react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { 
+  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, 
+  PieChart, Pie, Cell, Legend 
+} from "recharts";
 
 const Dashboard = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -38,8 +41,38 @@ const Dashboard = () => {
 
   const tabs = ["Overview", "Analytics", "Reports", "Notifications"];
 
+  // Analytics Data
+  const patientData = [
+    { age: "0-17", male: 120, female: 140 },
+    { age: "18-24", male: 150, female: 160 },
+    { age: "25-34", male: 210, female: 280 },
+    { age: "35-44", male: 180, female: 220 },
+    { age: "45-54", male: 160, female: 180 },
+    { age: "55-64", male: 140, female: 150 },
+    { age: "65+", male: 120, female: 140 },
+  ];
+
+  const appointmentData = [
+    { name: "Check-up", value: 35, color: "#4f46e5" },
+    { name: "Follow-up", value: 20, color: "#f59e0b" },
+    { name: "Procedure", value: 10, color: "#ef4444" },
+    { name: "Emergency", value: 5, color: "#8b5cf6" },
+    { name: "Other", value: 5, color: "#ec4899" },
+  ];
+
+  const revenueData = [
+    { department: "Orthopedics", revenue: 12000 },
+    { department: "Neurology", revenue: 9000 },
+    { department: "Oncology", revenue: 6500 },
+  ];
+
+  const staffData = [
+    { name: "Dr. Sarah Chen", role: "Cardiologist", patients: 42, rating: 4.9 },
+    { name: "Dr. Michael Rodriguez", role: "Neurologist", patients: 38, rating: 4.8 },
+  ];
+
   return (
-    <div className="p-6 bg-black min-h-screen  overflow-y-auto scrollbar-hide">
+    <div className="p-6 bg-black min-h-screen overflow-y-auto scrollbar-hide">
       {/* Dashboard Header */}
       <h1 className="text-4xl font-bold text-white mt-6">Dashboard</h1>
       <p className="text-white text-lg pt-2">
@@ -90,15 +123,13 @@ const Dashboard = () => {
           </button>
         ))}
       </div>
-
-      {/* Overview + Appointments Grid */}
+      {/* Overview Tab */}
       {activeTab === "Overview" && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
           {/* Overview Section */}
           <div className="bg-black border-2 border-gray-600 p-6 rounded-2xl shadow-lg">
             <h2 className="text-xl font-bold text-white">Overview</h2>
             <p className="text-gray-400 mb-4">Patient visits and revenue for the current period.</p>
-
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={chartData}>
                 <XAxis dataKey="month" stroke="#aaa" />
@@ -111,10 +142,9 @@ const Dashboard = () => {
           </div>
 
           {/* Recent Appointments */}
-          <div className="bg-black border-2 border-gray-600  p-6 rounded-2xl  shadow-lg">
+          <div className="bg-black border-2 border-gray-600 p-6 rounded-2xl shadow-lg">
             <h2 className="text-xl font-bold text-white">Recent Appointments</h2>
             <p className="text-gray-400 mb-4">You have 12 appointments today.</p>
-
             <div className="space-y-4">
               {appointments.map((appt, i) => (
                 <div key={i} className="flex items-center justify-between bg-gray-900 p-4 rounded-xl">
@@ -134,8 +164,101 @@ const Dashboard = () => {
         </div>
       )}
 
+      {/* Analytics Tab */}
+      {activeTab === "Analytics" && (
+        <div className="mt-8 space-y-6">
+          {/* Top Row */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Patient Demographics */}
+            <div className="bg-gray-800 p-4 rounded-lg">
+              <h2 className="font-bold mb-2">Patient Demographics</h2>
+              <p className="text-gray-400 text-sm mb-2">Age and gender distribution</p>
+              <ResponsiveContainer width="100%" height={200}>
+                <BarChart data={patientData}>
+                  <XAxis dataKey="age" stroke="#9ca3af" />
+                  <YAxis stroke="#9ca3af" />
+                  <Tooltip />
+                  <Bar dataKey="male" fill="#3b82f6" />
+                  <Bar dataKey="female" fill="#ec4899" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Appointment Types */}
+            <div className="bg-gray-800 p-4 rounded-lg">
+              <h2 className="font-bold mb-2">Appointment Types</h2>
+              <p className="text-gray-400 text-sm mb-2">Distribution by service category</p>
+              <ResponsiveContainer width="100%" height={200}>
+                <PieChart>
+                  <Pie data={appointmentData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={60} label>
+                    {appointmentData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Revenue Sources */}
+            <div className="bg-gray-800 p-4 rounded-lg">
+              <h2 className="font-bold mb-2">Revenue Sources</h2>
+              <p className="text-gray-400 text-sm mb-2">Breakdown by department</p>
+              <ResponsiveContainer width="100%" height={200}>
+                <BarChart layout="vertical" data={revenueData}>
+                  <XAxis type="number" stroke="#9ca3af" />
+                  <YAxis type="category" dataKey="department" stroke="#9ca3af" />
+                  <Tooltip />
+                  <Bar dataKey="revenue" fill="#10b981" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Bottom Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            {/* Patient Satisfaction */}
+            <div className="bg-gray-800 p-4 rounded-lg">
+              <h2 className="font-bold mb-2">Patient Satisfaction</h2>
+              <p className="text-gray-400 text-sm mb-4">Based on feedback surveys</p>
+              <div className="mb-2">
+                <span>Overall Experience</span>
+                <div className="w-full bg-gray-700 rounded-full h-4 mt-1">
+                  <div className="bg-green-500 h-4 rounded-full" style={{ width: "87%" }}></div>
+                </div>
+                <span className="text-sm ml-2">87%</span>
+              </div>
+              <div className="mb-2">
+                <span>Wait Time</span>
+                <div className="w-full bg-gray-700 rounded-full h-4 mt-1">
+                  <div className="bg-yellow-500 h-4 rounded-full" style={{ width: "75%" }}></div>
+                </div>
+                <span className="text-sm ml-2">75%</span>
+              </div>
+            </div>
+
+            {/* Staff Performance */}
+            <div className="bg-gray-800 p-4 rounded-lg">
+              <h2 className="font-bold mb-2">Staff Performance</h2>
+              <p className="text-gray-400 text-sm mb-4">Top performing staff members</p>
+              <ul>
+                {staffData.map((staff, index) => (
+                  <li key={index} className="mb-4 border-b border-gray-700 pb-2">
+                    <p className="font-semibold">{staff.name}</p>
+                    <p className="text-gray-400 text-sm">{staff.role}</p>
+                    <p className="text-sm">
+                      {staff.patients} patients | Rating: {staff.rating}/5
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Other Tabs */}
-      {activeTab !== "Overview" && (
+      {activeTab !== "Overview" && activeTab !== "Analytics" && (
         <div className="mt-8 bg-gray-800 p-6 rounded-2xl shadow-lg text-white">
           <h2 className="text-xl font-bold">{activeTab}</h2>
           <p className="text-gray-400 mt-2">Content for {activeTab} will go here.</p>

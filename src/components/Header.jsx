@@ -30,7 +30,7 @@ const Header = ({ open, setOpen }) => {
   }, []);
 
   return (
-    <header className="flex items-center border-2 border-gray-400 justify-between bg-black dark:bg-gray-900 text-white dark:text-black px-6 py-6 shadow">
+    <header className="flex items-center border-2 border-gray-400 justify-between bg-black dark:bg-gray-900 text-white dark:text-black px-6 py-5 shadow">
       {/* Left side: Menu */}
       <div className="flex items-center gap-4">
         <button
