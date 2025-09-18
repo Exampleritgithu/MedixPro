@@ -50,16 +50,16 @@ const Past = () => {
   ]);
 
   return (
-    <div className="p-6 bg-black text-white min-h-screen">
+    <div className="p-4 sm:p-6 bg-black text-white min-h-screen">
       {/* Top Bar */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-3">
         <div>
-          <h1 className="text-3xl font-bold">Past Appointments</h1>
-          <p className="text-gray-400">
+          <h1 className="text-2xl sm:text-3xl font-bold">Past Appointments</h1>
+          <p className="text-gray-400 text-sm sm:text-base">
             Review completed or cancelled appointments.
           </p>
         </div>
-        <button className="bg-white text-black font-semibold px-4 py-2 rounded-lg shadow">
+        <button className="bg-white text-black font-semibold px-4 py-2 rounded-lg shadow w-full sm:w-auto">
           Export History
         </button>
       </div>
@@ -67,62 +67,98 @@ const Past = () => {
       {/* Past Appointments List */}
       <div className="bg-zinc-900 rounded-lg p-4 shadow">
         <div className="mb-4">
-          <h2 className="text-xl font-bold">Appointment History</h2>
-          <p className="text-gray-400 text-sm">
+          <h2 className="text-lg sm:text-xl font-bold">Appointment History</h2>
+          <p className="text-gray-400 text-xs sm:text-sm">
             A record of all past patient visits and consultations.
           </p>
         </div>
 
         {/* Search + Filter */}
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4">
           <input
             type="text"
             placeholder="Search past appointments..."
-            className="bg-zinc-800 text-white p-2 rounded w-1/3 outline-none"
+            className="bg-zinc-800 text-white p-2 rounded w-full sm:w-1/3 outline-none"
           />
-          <div className="flex gap-2">
+          <div className="flex gap-2 justify-end">
             <button className="bg-zinc-800 p-2 rounded">🔍</button>
             <button className="bg-zinc-800 p-2 rounded">⏬</button>
           </div>
         </div>
 
-        {/* Table */}
-        <table className="w-full text-left border-collapse">
-          <thead className="border-b border-gray-700 text-gray-400">
-            <tr>
-              <th className="p-3">Patient</th>
-              <th className="p-3">Doctor</th>
-              <th className="p-3">Department</th>
-              <th className="p-3">Date</th>
-              <th className="p-3">Time</th>
-              <th className="p-3">Status</th>
-              <th className="p-3">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pastAppointments.map((appt) => (
-              <tr key={appt.id} className="border-b border-gray-700">
-                <td className="p-3 font-semibold">{appt.patient}</td>
-                <td className="p-3">{appt.doctor}</td>
-                <td className="p-3">{appt.department}</td>
-                <td className="p-3">{appt.date}</td>
-                <td className="p-3">{appt.time}</td>
-                <td className="p-3">
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                      appt.status === "Completed"
-                        ? "bg-green-600"
-                        : "bg-red-600"
-                    }`}
-                  >
-                    {appt.status}
-                  </span>
-                </td>
-                <td className="p-3">⋮</td>
+        {/* Table for Desktop */}
+        <div className="hidden md:block overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead className="border-b border-gray-700 text-gray-400">
+              <tr>
+                <th className="p-3">Patient</th>
+                <th className="p-3">Doctor</th>
+                <th className="p-3">Department</th>
+                <th className="p-3">Date</th>
+                <th className="p-3">Time</th>
+                <th className="p-3">Status</th>
+                <th className="p-3">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {pastAppointments.map((appt) => (
+                <tr key={appt.id} className="border-b border-gray-700">
+                  <td className="p-3 font-semibold">{appt.patient}</td>
+                  <td className="p-3">{appt.doctor}</td>
+                  <td className="p-3">{appt.department}</td>
+                  <td className="p-3">{appt.date}</td>
+                  <td className="p-3">{appt.time}</td>
+                  <td className="p-3">
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                        appt.status === "Completed"
+                          ? "bg-green-600"
+                          : "bg-red-600"
+                      }`}
+                    >
+                      {appt.status}
+                    </span>
+                  </td>
+                  <td className="p-3">⋮</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Card Layout for Mobile */}
+        <div className="grid grid-cols-1 gap-4 md:hidden">
+          {pastAppointments.map((appt) => (
+            <div
+              key={appt.id}
+              className="bg-zinc-800 p-4 rounded-lg shadow space-y-2"
+            >
+              <div className="flex justify-between">
+                <span className="font-bold">{appt.patient}</span>
+                <span
+                  className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                    appt.status === "Completed"
+                      ? "bg-green-600"
+                      : "bg-red-600"
+                  }`}
+                >
+                  {appt.status}
+                </span>
+              </div>
+              <p className="text-sm text-gray-300">
+                <strong>Doctor:</strong> {appt.doctor}
+              </p>
+              <p className="text-sm text-gray-300">
+                <strong>Dept:</strong> {appt.department}
+              </p>
+              <p className="text-sm text-gray-300">
+                <strong>Date:</strong> {appt.date} | <strong>Time:</strong>{" "}
+                {appt.time}
+              </p>
+              <div className="text-right text-gray-400">⋮</div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
