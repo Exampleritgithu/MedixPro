@@ -6,7 +6,9 @@ import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
 
 // Lazy load pages
-const DashboardOverview = lazy(() => import("./pages/dashboard/AdminDashboard"));
+const DashboardOverview = lazy(() =>
+  import("./pages/dashboard/AdminDashboard")
+);
 const DashboardAnalytics = lazy(() => import("./pages/dashboard/Analytics"));
 const DashboardActivity = lazy(() => import("./pages/dashboard/Activity"));
 
@@ -18,20 +20,25 @@ const AllPatients = lazy(() => import("./pages/patients/All"));
 const PatientAdmissions = lazy(() => import("./pages/patients/Admissions"));
 const PatientHistory = lazy(() => import("./pages/patients/History"));
 
-const UpcomingAppointments = lazy(() => import("./pages/appointments/Upcoming"));
+const UpcomingAppointments = lazy(() =>
+  import("./pages/appointments/Upcoming")
+);
 const PastAppointments = lazy(() => import("./pages/appointments/Past"));
 const RequestAppointments = lazy(() => import("./pages/appointments/Requests"));
 
 const PharmacyStock = lazy(() => import("./pages/pharmacy/Stock"));
 const PharmacyOrders = lazy(() => import("./pages/pharmacy/Orders"));
 const PharmacySuppliers = lazy(() => import("./pages/pharmacy/Suppliers"));
+import BloodDonors from "./pages/bloodbank/Donors";
+import BloodRequests from "./pages/bloodbank/Requests";
+import BloodReports from "./pages/bloodbank/Reports";
 
 function App() {
   const [open, setOpen] = useState(true);
 
   return (
     <Router>
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-black">
         {/* Sidebar */}
         <Sidebar open={open} setOpen={setOpen} />
 
@@ -46,29 +53,60 @@ function App() {
                 <Route path="/" element={<Dashboard />} />
 
                 {/* Dashboard */}
-                <Route path="/dashboard/adminDashboard" element={<DashboardOverview />} />
-                <Route path="/dashboard/analytics" element={<DashboardAnalytics />} />
-                <Route path="/dashboard/activity" element={<DashboardActivity />} />
+                <Route
+                  path="/dashboard/adminDashboard"
+                  element={<DashboardOverview />}
+                />
+                <Route
+                  path="/dashboard/analytics"
+                  element={<DashboardAnalytics />}
+                />
+                <Route
+                  path="/dashboard/activity"
+                  element={<DashboardActivity />}
+                />
 
                 {/* Doctors */}
                 <Route path="/doctors/all" element={<AllDoctors />} />
                 <Route path="/doctors/specialists" element={<Specialists />} />
-                <Route path="/doctors/schedules" element={<DoctorSchedules />} />
+                <Route
+                  path="/doctors/schedules"
+                  element={<DoctorSchedules />}
+                />
 
                 {/* Patients */}
                 <Route path="/patients/all" element={<AllPatients />} />
-                <Route path="/patients/admissions" element={<PatientAdmissions />} />
+                <Route
+                  path="/patients/admissions"
+                  element={<PatientAdmissions />}
+                />
                 <Route path="/patients/history" element={<PatientHistory />} />
 
                 {/* Appointments */}
-                <Route path="/appointments/upcoming" element={<UpcomingAppointments />} />
-                <Route path="/appointments/past" element={<PastAppointments />} />
-                <Route path="/appointments/requests" element={<RequestAppointments />} />
+                <Route
+                  path="/appointments/upcoming"
+                  element={<UpcomingAppointments />}
+                />
+                <Route
+                  path="/appointments/past"
+                  element={<PastAppointments />}
+                />
+                <Route
+                  path="/appointments/requests"
+                  element={<RequestAppointments />}
+                />
 
                 {/* Pharmacy */}
                 <Route path="/pharmacy/stock" element={<PharmacyStock />} />
                 <Route path="/pharmacy/orders" element={<PharmacyOrders />} />
-                <Route path="/pharmacy/suppliers" element={<PharmacySuppliers />} />
+                <Route
+                  path="/pharmacy/suppliers"
+                  element={<PharmacySuppliers />}
+                />
+                {/* Blood Bank */}
+                <Route path="/bloodbank/donors" element={<BloodDonors />} />
+                <Route path="/bloodbank/requests" element={<BloodRequests />} />
+                <Route path="/bloodbank/reports" element={<BloodReports />} />
               </Routes>
             </Suspense>
           </div>
