@@ -32,7 +32,25 @@ const PharmacySuppliers = lazy(() => import("./pages/pharmacy/Suppliers"));
 import BloodDonors from "./pages/bloodbank/Donors";
 import BloodRequests from "./pages/bloodbank/Requests";
 import BloodReports from "./pages/bloodbank/Reports";
-
+import StaffDoctors from "./pages/staff/Doctors";
+import StaffNurses from "./pages/staff/Nurses";
+import StaffAdmin from "./pages/staff/Admin";
+import PatientRecords from "./pages/records/Patients";
+import BillingRecords from "./pages/records/Billing";
+import AvailableRooms from "./pages/rooms/Available";
+import OccupiedRooms from "./pages/rooms/Occupied";
+import PatientReviews from "./pages/reviews/Patient";
+import DoctorReviews from "./pages/reviews/Doctor";
+import PatientFeedback from "./pages/feedback/Patients";
+import StaffFeedback from "./pages/feedback/Staff";
+import DailyReports from "./pages/reports/Daily";
+import MonthlyReports from "./pages/reports/Monthly";
+import AnnualReports from "./pages/reports/Annual";
+import ProfileSettings from "./pages/settings/Profile";
+import SecuritySettings from "./pages/settings/Security";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import ForgotPassword from "./pages/auth/ForgotPassword";
 function App() {
   const [open, setOpen] = useState(true);
 
@@ -51,7 +69,6 @@ function App() {
             <Suspense fallback={<div className="text-center">Loading...</div>}>
               <Routes>
                 <Route path="/" element={<Dashboard />} />
-
                 {/* Dashboard */}
                 <Route
                   path="/dashboard/adminDashboard"
@@ -65,7 +82,6 @@ function App() {
                   path="/dashboard/activity"
                   element={<DashboardActivity />}
                 />
-
                 {/* Doctors */}
                 <Route path="/doctors/all" element={<AllDoctors />} />
                 <Route path="/doctors/specialists" element={<Specialists />} />
@@ -73,7 +89,6 @@ function App() {
                   path="/doctors/schedules"
                   element={<DoctorSchedules />}
                 />
-
                 {/* Patients */}
                 <Route path="/patients/all" element={<AllPatients />} />
                 <Route
@@ -81,7 +96,6 @@ function App() {
                   element={<PatientAdmissions />}
                 />
                 <Route path="/patients/history" element={<PatientHistory />} />
-
                 {/* Appointments */}
                 <Route
                   path="/appointments/upcoming"
@@ -95,7 +109,6 @@ function App() {
                   path="/appointments/requests"
                   element={<RequestAppointments />}
                 />
-
                 {/* Pharmacy */}
                 <Route path="/pharmacy/stock" element={<PharmacyStock />} />
                 <Route path="/pharmacy/orders" element={<PharmacyOrders />} />
@@ -107,6 +120,47 @@ function App() {
                 <Route path="/bloodbank/donors" element={<BloodDonors />} />
                 <Route path="/bloodbank/requests" element={<BloodRequests />} />
                 <Route path="/bloodbank/reports" element={<BloodReports />} />
+                {/* Staff */}
+                <Route path="/staff/doctors" element={<StaffDoctors />} />
+                <Route path="/staff/nurses" element={<StaffNurses />} />
+                <Route path="/staff/admin" element={<StaffAdmin />} />
+                {/* Records */}
+                <Route
+                  path="/records/patients"
+                  element={<PatientRecords />}
+                />{" "}
+                <Route path="/records/billing" element={<BillingRecords />} />
+                {/* Rooms */}
+                <Route
+                  path="/rooms/available"
+                  element={<AvailableRooms />}
+                />{" "}
+                <Route path="/rooms/occupied" element={<OccupiedRooms />} />
+                {/* Reviews */}
+                <Route path="/reviews/patient" element={<PatientReviews />} />
+                <Route path="/reviews/doctor" element={<DoctorReviews />} />
+                {/* Feedback */}
+                <Route
+                  path="/feedback/patients"
+                  element={<PatientFeedback />}
+                />
+                <Route path="/feedback/staff" element={<StaffFeedback />} />
+                {/* Reports */}
+                <Route path="/reports/daily" element={<DailyReports />} />
+                <Route path="/reports/monthly" element={<MonthlyReports />} />
+                <Route path="/reports/annual" element={<AnnualReports />} />
+                <Route path="/settings/profile" element={<ProfileSettings />} />
+                <Route
+                  path="/settings/security"
+                  element={<SecuritySettings />}
+                />
+                {/* Auth */}
+                <Route path="/auth/login" element={<Login />} />
+                <Route path="/auth/register" element={<Register />} />
+                <Route
+                  path="/auth/forgot-password"
+                  element={<ForgotPassword />}
+                />
               </Routes>
             </Suspense>
           </div>

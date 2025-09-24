@@ -220,5 +220,4 @@ const Sidebar = ({ open }) => {
     </div>
   );
 };
-
 export default Sidebar;
